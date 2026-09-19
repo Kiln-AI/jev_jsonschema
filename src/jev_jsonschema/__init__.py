@@ -1,15 +1,29 @@
 """Convert between JSON Schema and TypeSafe Jev's question/answer format.
 
-A self-contained module: pydantic is its only dependency, it imports nothing from Kiln,
-and its error messages are neutral so a consumer can present them as-is. It also owns
-the System One wire models, so nothing else is needed to build a request or parse a
-response.
+`JevClient` does the whole loop — schema in, schema-shaped JSON out:
+
+    result = JevClient().evaluate(schema, state="...")
+    result.output
+
+The conversion is also usable on its own, if you'd rather make the HTTP call yourself:
 
     question_set = JSONSchema2Jev().convert(schema)
     response = post(question_set.request(state, model).to_body())
     decoded = JevResult2JsonSchema().convert(question_set, response["answers"])
 """
 
+from ._version import __version__
+from .client import (
+    API_KEY_ENV_VAR,
+    DEFAULT_MODEL,
+    JEV_BASE_URL,
+    JEV_TIMEOUT_SECONDS,
+    AsyncJevClient,
+    JevApiError,
+    JevClient,
+    JevResponseError,
+    JevResult,
+)
 from .from_jev import DecodedResult, JevResult2JsonSchema
 from .models import (
     ChoiceAnswer,
@@ -40,14 +54,23 @@ from .to_jev import (
 )
 
 __all__ = [
+    "API_KEY_ENV_VAR",
+    "DEFAULT_MODEL",
+    "JEV_BASE_URL",
+    "JEV_TIMEOUT_SECONDS",
     "ROOT_KEY",
+    "AsyncJevClient",
     "ChoiceAnswer",
     "ChoiceQuestion",
     "DecodedResult",
     "IncompatibleSchemaError",
     "JSONSchema2Jev",
     "JevAnswer",
+    "JevApiError",
+    "JevClient",
     "JevQuestion",
+    "JevResponseError",
+    "JevResult",
     "JevResult2JsonSchema",
     "JsonContent",
     "MappedKind",
@@ -65,4 +88,5 @@ __all__ = [
     "SystemOneResponse",
     "SystemOneUsage",
     "UnexpectedAnswerError",
+    "__version__",
 ]
