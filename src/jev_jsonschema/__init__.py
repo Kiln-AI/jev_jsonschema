@@ -1,6 +1,6 @@
 """Convert between JSON Schema and TypeSafe Jev's question/answer format.
 
-`JevClient` does the whole loop — schema in, schema-shaped JSON out:
+`JevClient` does the whole loop: schema in, schema-shaped JSON out.
 
     result = JevClient().evaluate(schema, state="...")
     result.output
