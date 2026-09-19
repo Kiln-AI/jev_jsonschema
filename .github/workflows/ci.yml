@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  UV_FROZEN: "1"
+
+jobs:
+  lint:
+    name: Lint & typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - run: uv sync
+
+      - name: ruff check
+        run: uv run ruff check --output-format=github
+
+      - name: ruff format
+        run: uv run ruff format --check
+
+      - name: ty
+        run: uv run ty check
+
+  test:
+    name: Test (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+          python-version: ${{ matrix.python-version }}
+
+      - run: uv sync
+
+      - name: pytest
+        run: uv run pytest --cov=jev_jsonschema --cov-report=term-missing
+
+  build:
+    name: Build & verify package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: astral-sh/setup-uv@v7
+        with:
+          enable-cache: true
+
+      - name: Build wheel and sdist
+        run: uv build
+
+      - name: Check package metadata
+        run: uvx twine check --strict dist/*
+
+      - name: Install the wheel and import it
+        run: |
+          uv venv /tmp/wheel-check
+          VIRTUAL_ENV=/tmp/wheel-check uv pip install dist/*.whl
+          /tmp/wheel-check/bin/python -c "import jev_jsonschema; print(jev_jsonschema.JSONSchema2Jev)"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
