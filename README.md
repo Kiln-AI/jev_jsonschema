@@ -78,7 +78,7 @@ for review in reviews:
 
 ## What Maps to What
 
-Jev has three question types. Here's the JSON Schema that reaches each one:
+Jev has [three question types](https://docs.typesafe.ai/introduction#typesafe-primitives). Here's the JSON Schema that reaches each one:
 
 | JSON Schema Type | JSON Schema Example | Jev Question Type | Details |
 |---|---|---|---|
