@@ -3,9 +3,9 @@ from typing import Any
 import jsonschema
 import pytest
 
-from .from_jev import JevResult2JsonSchema
-from .models import ChoiceAnswer, NoulAnswer, NoulQuestion, ScoreAnswer
-from .to_jev import (
+from jev_jsonschema.from_jev import JevResult2JsonSchema
+from jev_jsonschema.models import ChoiceAnswer, NoulAnswer, NoulQuestion, ScoreAnswer
+from jev_jsonschema.to_jev import (
     JSONSchema2Jev,
     MappedKind,
     MappedQuestion,

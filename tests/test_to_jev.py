@@ -2,8 +2,8 @@ from typing import Any
 
 import pytest
 
-from .models import ChoiceQuestion, NoulQuestion, ScoreQuestion
-from .to_jev import (
+from jev_jsonschema.models import ChoiceQuestion, NoulQuestion, ScoreQuestion
+from jev_jsonschema.to_jev import (
     IncompatibleSchemaError,
     JSONSchema2Jev,
     MappedKind,

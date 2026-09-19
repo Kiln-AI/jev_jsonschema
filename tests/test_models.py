@@ -1,7 +1,7 @@
 import pytest
 from pydantic import TypeAdapter, ValidationError
 
-from .models import (
+from jev_jsonschema.models import (
     ChoiceAnswer,
     ChoiceQuestion,
     JevAnswer,
@@ -74,12 +74,12 @@ def test_choice_question_option_limits(options: int, valid: bool):
 
 def test_noul_question_requires_instructions():
     with pytest.raises(ValidationError):
-        NoulQuestion()  # type: ignore[call-arg]
+        NoulQuestion()  # ty: ignore[missing-argument]
 
 
 def test_questions_forbid_unknown_fields():
     with pytest.raises(ValidationError):
-        NoulQuestion(instructions="Is this spam?", temperature=0.5)  # type: ignore[call-arg]
+        NoulQuestion(instructions="Is this spam?", temperature=0.5)  # ty: ignore[unknown-argument]
 
 
 @pytest.mark.parametrize(
