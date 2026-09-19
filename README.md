@@ -1,6 +1,6 @@
 <div align="center">
 
-### jev_jsonschema
+### Jev ⇄ JSON Schema
 
 **Use a JSON Schema with [Jev](https://docs.typesafe.ai/introduction). Get JSON back.**
 
@@ -18,7 +18,7 @@
 
 ---
 
-Jev is TypeSafe's System One model. It can't hallucinate a value, because it never writes one: you send it typed questions, and it answers them with probabilities. That's great, but it means Jev doesn't speak JSON Schema — and almost every LLM app already has its structured output defined as a JSON Schema.
+Jev is a new kind of model from TypeSafe. It only returns structured output, it's blazing fast, and it's cheap. That's great, but it means Jev doesn't speak JSON Schema, and most LLM apps use JSON Schema for structured output .
 
 This library sits in between. Give it your schema and your content, and you get back JSON that validates against the schema you started with.
 
