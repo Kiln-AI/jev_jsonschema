@@ -18,7 +18,7 @@
 
 ---
 
-Jev is a new kind of model from TypeSafe. It only returns structured output, it's blazing fast, and it's cheap. That's great, but it means Jev doesn't speak JSON Schema, and most LLM apps use JSON Schema for structured output.
+Jev is a new kind of model from TypeSafe: it only returns structured output, it's blazing fast, and it's cheap. That's great, but it means Jev doesn't speak JSON Schema, and most LLM apps use JSON Schema for structured output.
 
 This library sits in between. Give it your schema and your content, and you get back JSON that validates against the schema you started with.
 
